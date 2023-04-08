@@ -6,7 +6,6 @@
   padding: 6rem;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
-
 }
 
 .description {
@@ -44,7 +43,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(25%, auto));
-  width: var(--max-width);
+  grid-column-gap: 20px;
   max-width: 100%;
 }
 
