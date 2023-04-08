@@ -6,6 +6,9 @@
 trigger:
 - main
 
+variables:
+  NEXT_PUBLIC_GMAPS_KEY: $(NEXT_PUBLIC_GMAPS_KEY)
+
 pool:
   vmImage: 'ubuntu-latest'
 
