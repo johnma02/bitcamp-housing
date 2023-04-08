@@ -14,7 +14,7 @@ const pool = new Pool(config);
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM ca_housing WHERE MOD(housing_id, 200) = 0;');
+        const result = await client.query('SELECT * FROM ca_housing WHERE MOD(housing_id, 50) = 0;');
         await client.release();
         res.status(200).json(result.rows);
     } catch (err) {

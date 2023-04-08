@@ -1,4 +1,4 @@
-import {GoogleMap, LoadScript, GroundOverlayF, HeatmapLayerF} from '@react-google-maps/api';
+import {GoogleMap, LoadScript, HeatmapLayerF} from '@react-google-maps/api';
 import {useState, useEffect} from 'react';
 interface RowData {
     housing_id: number;
@@ -37,7 +37,7 @@ export default function Map(): JSX.Element{
     }, [data]);
     
     useEffect(() =>{
-        if(pricing.length > 100) setPointsReady(true);
+        if(pricing.length > 200) setPointsReady(true);
     }, [pricing]);
     return(
         <div>
