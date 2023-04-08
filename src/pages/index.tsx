@@ -27,7 +27,7 @@ export default function Home() {
                     </div>
 
                     <div className={styles.card}>
-                        <h2 className={inter.className}>Card 2</h2>
+                        <h2 className={inter.className}>Housing Data</h2>
                         <Table></Table>
                     </div>
                 </div>
