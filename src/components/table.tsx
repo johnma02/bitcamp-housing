@@ -3,8 +3,8 @@ import { Table } from 'antd';
 
 interface RowData {
   housing_id: number;
-//   longitude: number;
-//   latitude: number;
+  longitude: number;
+  latitude: number;
 //   housing_median_age: number;
 //   total_rooms: number;
 //   total_bedrooms: number;
@@ -31,11 +31,25 @@ export default function MapTable(): JSX.Element {
             key: 'housing_id',
         },
         {
-            title: 'median_house_value',
+            title: 'Longitude',
+            dataIndex: 'longitude',
+            key: 'longitude',
+        },
+        {
+            title: 'Latitude',
+            dataIndex: 'latitude',
+            key: 'latitude',
+        },
+        {
+            title: 'Median House Value',
             dataIndex: 'median_house_value',
             key: 'median_house_value',
         }
     ];
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div>

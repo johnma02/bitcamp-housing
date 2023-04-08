@@ -14,7 +14,7 @@ const pool = new Pool(config);
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM ca_housing LIMIT 10');
+        const result = await client.query('SELECT * FROM ca_housing LIMIT 30');
         await client.release();
         res.status(200).json(result.rows);
     } catch (err) {
