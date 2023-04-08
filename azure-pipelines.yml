@@ -26,6 +26,7 @@ steps:
 - script: |
     zip bitcamp-app.zip ./* .next -qr
   displayName: 'zipping artifact'
+  
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(System.DefaultWorkingDirectory)/bitcamp-app.zip'
