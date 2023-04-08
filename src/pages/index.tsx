@@ -2,6 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Map from '@/components/map';
 import { Inter } from 'next/font/google';
+import Table from '@/components/table';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +28,7 @@ export default function Home() {
 
                     <div className={styles.card}>
                         <h2 className={inter.className}>Card 2</h2>
-                        <p className={inter.className}>Content for card 2 goes here.</p>
+                        <Table></Table>
                     </div>
                 </div>
             </main>
