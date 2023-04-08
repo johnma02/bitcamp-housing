@@ -26,11 +26,6 @@ export default function MapTable(): JSX.Element {
     
     const columns = [
         {
-            title: 'housing_id',
-            dataIndex: 'housing_id',
-            key: 'housing_id',
-        },
-        {
             title: 'Longitude',
             dataIndex: 'longitude',
             key: 'longitude',
@@ -41,9 +36,9 @@ export default function MapTable(): JSX.Element {
             key: 'latitude',
         },
         {
-            title: 'Median House Value',
-            dataIndex: 'median_house_value',
-            key: 'median_house_value',
+            title: 'Average House Value',
+            dataIndex: 'avg_house_value',
+            key: 'avg_house_value',
         }
     ];
 
@@ -57,3 +52,4 @@ export default function MapTable(): JSX.Element {
         </div>
     );
 };
+

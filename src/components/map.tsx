@@ -13,12 +13,16 @@ export default function Map(): JSX.Element{
                 onError={() => console.log('Google Maps script loading failed')}
             >
                 <GoogleMap
+                    id={"map"}
                     mapContainerStyle={{width: '700px', height: '700px'}}
                     zoom={3}
                     //39.0458° N, 76.6413° W
                     center={{lat: 39.0458, lng: -76.6413}}
+                    onClick={(e) => handleClick(e)}
                 />
             </LoadScript>
         </div>
     );
 } 
+
+function handleClick(event) {var lat = event.latLng.lat(), lng = event.latLng.lng()}
