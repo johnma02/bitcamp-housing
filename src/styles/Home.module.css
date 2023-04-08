@@ -41,9 +41,11 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
+  grid-template-columns: repeat(2, 1fr);
   width: var(--max-width);
-  max-width: 100%;
+  max-width: 120%;
+  justify-items: center;
+  align-items: center;
 }
 
 .card {
@@ -107,6 +109,11 @@
 .logo {
   position: relative;
 }
+
+.table {
+  border: 1px solid;
+  width: 100%;
+}
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
@@ -139,7 +146,7 @@
   }
 
   .card {
-    padding: 1rem 2.5rem;
+    padding: 2rem 2.5rem;
   }
 
   .card h2 {
