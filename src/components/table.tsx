@@ -16,11 +16,12 @@ interface RowData {
 }
 
 interface MapTableProps{
-    usrCoord: google.maps.LatLng | null
+    usrCoord: google.maps.LatLng | null;
+    radius: number;
 }
 
 
-export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
+export default function MapTable({usrCoord, radius}:MapTableProps): JSX.Element {
     const [data, setData] = useState<RowData[]>([]);
     // const fetchData = async () =>{
     //     const response = await fetch('/api/data');

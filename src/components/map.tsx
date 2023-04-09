@@ -1,5 +1,6 @@
-import {GoogleMap, LoadScript, HeatmapLayerF, StandaloneSearchBox, useGoogleMap} from '@react-google-maps/api';
-import {useState, useEffect, useRef, useCallback} from 'react';
+import {GoogleMap, LoadScript, HeatmapLayerF, StandaloneSearchBox} from '@react-google-maps/api';
+import {useState, useEffect, useRef} from 'react';
+import Form from 'react-bootstrap/Form';
 import styles from '../styles/Home.module.css';
 import Table from '@/components/table';
 import { Inter } from 'next/font/google';
@@ -29,6 +30,7 @@ export default function Map(): JSX.Element{
     const [pricing, setPricing] = useState<google.maps.visualization.WeightedLocation[]>([]);
     const [pointsReady, setPointsReady] = useState<boolean>(false);
     const [usrCoord, setUsrCoord] = useState<google.maps.LatLng | null>(null);
+    const [radius, setRadius] = useState<number>(10);
     const fetchData = async () =>{
         const response = await fetch('/api/heatmap');
         const result = await response.json();
@@ -96,11 +98,11 @@ export default function Map(): JSX.Element{
                             onPlacesChanged={handleSearch}>
                             <input
                                 type="text"
-                                placeholder="Find me housing prices near ..."
+                                placeholder={`Find me houses within ${radius} miles of ...`}
                                 style={{
                                     boxSizing: `border-box`,
                                     border: `1px solid transparent`,
-                                    width: `240px`,
+                                    width: `280px`,
                                     height: `32px`,
                                     padding: `0 12px`,
                                     borderRadius: `3px`,
@@ -123,7 +125,9 @@ export default function Map(): JSX.Element{
 
             <div className={styles.card}>
                 <h2 className={inter.className}>Housing Price Data</h2>
-                <Table usrCoord={usrCoord} ></Table>
+                <Table usrCoord={usrCoord} radius={radius}></Table>
+                <Form.Label>Set my search radius to ...</Form.Label>
+                <Form.Range></Form.Range>
             </div>
         </div>
         
