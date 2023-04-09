@@ -13,11 +13,10 @@ const pool = new Pool(config);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const {query, method} = req;
-        const lng = Number(query.lng);
-        const lat = Number(query.lat);
+        const lng = Number(req.query.lng);
+        const lat = Number(req.query.lat);
         const client = await pool.connect();
-        const result = await client.query('SELECT longitude,latitude, SQRT(POWER(longitude-$1)+POWER(longitude-$2)) as distance FROM ca_housing WHERE distance <=1000', [lng, lat]);
+        const result = await client.query('SELECT longitude, latitude, round(avg(median_house_value)) as avg_house_value FROM ca_housing WHERE SQRT(POWER(longitude-$1, 2)+POWER(latitude-$2, 2)) < .1 GROUP BY longitude, latitude',[lng,lat]);
         await client.release();
         res.status(200).json(result.rows);
     } catch (err) {
