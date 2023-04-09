@@ -123,7 +123,7 @@ export default function Map(): JSX.Element{
                             visible={usrCoord ? true: false}
                             center={usrCoord ? usrCoord : undefined}
                             radius={radius}
-                            options={{strokeColor:'sienna'}}
+                            options={{strokeColor:'sienna', clickable: false}}
                         ></CircleF>
                     </GoogleMap>
                 </LoadScript>
