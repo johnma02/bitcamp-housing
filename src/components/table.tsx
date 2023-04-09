@@ -34,7 +34,7 @@ export default function MapTable({usrCoord, radius}:MapTableProps): JSX.Element 
             const result = await response.json();
             setData(result);
         } else{
-            const response = await fetch(`/api/coord?lat=${usrCoord.lat()}&lng=${usrCoord.lng()}`);
+            const response = await fetch(`/api/coord?lat=${usrCoord.lat()}&lng=${usrCoord.lng()}&radius=${radius}`);
             const result = await response.json();
             console.log(result);
             setData(result);
