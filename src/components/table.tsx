@@ -22,21 +22,22 @@ interface MapTableProps{
 
 export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
     const [data, setData] = useState<RowData[]>([]);
-    const fetchData = async () =>{
-        const response = await fetch('/api/data');
-        const result = await response.json();
-        setData(result);
-    };
+    // const fetchData = async () =>{
+    //     const response = await fetch('/api/data');
+    //     const result = await response.json();
+    //     setData(result);
+    // };
     const fetchCoord = async (usrCoord:google.maps.LatLng | null) =>{
-        const response = await fetch("/api/coord",{
-            "method":"GET",
-            "headers":{
-                "lng":"${usrCoord.lng()}",
-                "lat":"${usrCoord.lat()}"
-            },
-        });
-        const result = await response.json();
-        setData(result);
+        if (usrCoord == null){
+            const response = await fetch('/api/data');
+            const result = await response.json();
+            setData(result);
+        } else{
+            const response = await fetch(`/api/coord?lat=${usrCoord.lat()}&lng=${usrCoord.lng()}`);
+            const result = await response.json();
+            console.log(result);
+            setData(result);
+        }
     };
     
     const columns = [
@@ -61,9 +62,9 @@ export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
     //     fetchData();
     // }, []);
 
-    // useEffect(() => {
-    //     fetchCoord(usrCoord);
-    // }, [usrCoord]);
+    useEffect(() => {
+        fetchCoord(usrCoord);
+    }, [usrCoord]);
 
     return (
         <div>
