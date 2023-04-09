@@ -4,9 +4,9 @@
 
 ### Production
 
-[link](https://bitcamp-app.azurewebsites.net/)
+[https://bitcamp-app.azurewebsites.net/](https://bitcamp-app.azurewebsites.net/)
 
 ### DevPost
 
-[link](https://devpost.com/software/housing-price-map)
+[https://devpost.com/software/housing-price-map](https://devpost.com/software/housing-price-map)
     
