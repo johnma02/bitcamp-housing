@@ -1,5 +1,5 @@
-import {GoogleMap, LoadScript, HeatmapLayerF} from '@react-google-maps/api';
-import {useState, useEffect} from 'react';
+import {GoogleMap, LoadScript, HeatmapLayerF, StandaloneSearchBox, useGoogleMap} from '@react-google-maps/api';
+import {useState, useEffect, useRef, useCallback} from 'react';
 import styles from '../styles/Home.module.css';
 import Table from '@/components/table';
 import { Inter } from 'next/font/google';
@@ -18,11 +18,12 @@ interface RowData {
     median_house_value: number;
   //   ocean_proximity: string;
   }
+  
 type Libraries = ("drawing" | "geometry" | "localContext" | "places" | "visualization")[];
-const libraries : Libraries = ["visualization"];
+const libraries : Libraries = ["visualization", "places"];
 
 
-export default function Map(this: any): JSX.Element{
+export default function Map(): JSX.Element{
     const [data, setData] = useState<RowData[]>([]);
     const [loaded, setLoaded] = useState<boolean>(false);
     const [pricing, setPricing] = useState<google.maps.visualization.WeightedLocation[]>([]);
@@ -39,12 +40,34 @@ export default function Map(this: any): JSX.Element{
         setUsrCoord(event.latLng);
     }
     
+    // search bar logic
+    const searchRef = useRef<StandaloneSearchBox | null>(null);
+    const mapRef = useRef<GoogleMap | null>(null);
+    function handleSearch(){
+        console.log("handling search...");
+        const place = searchRef.current?.state.searchBox?.getPlaces();
+        const location: (google.maps.LatLng | undefined) = place?.at(0)?.geometry?.location;
+        const map = mapRef.current?.state.map;
+        if(location){
+            console.log(location.lat());
+            console.log(location.lng());
+            setUsrCoord(location);
+            if (map) {
+                map.panTo(location);
+            } else {
+                console.error("Map object not found");
+            }
+        } else{
+            console.log("queried location does not indicate lat/long");
+        }
+    }
+
     useEffect(()=>{
         if(loaded) fetchData();
     }, [loaded]);
 
     useEffect(()=>{
-        setPricing(data.map((x) =>  ({location: new google.maps.LatLng(x.latitude, x.longitude), weight: x.median_house_value/100000 })));
+        setPricing(data.map((x) =>  ({key: x, location: new google.maps.LatLng(x.latitude, x.longitude), weight: x.median_house_value/100000 })));
     }, [data]);
     
     useEffect(() =>{
@@ -61,12 +84,36 @@ export default function Map(this: any): JSX.Element{
                 >
                     <GoogleMap
                         id={"map"}
+                        ref={mapRef}
                         mapContainerStyle={{width: '700px', height: '700px'}}
                         zoom={6}
                         //37.865101, -119.538330 : Yosemite National Park
                         center={{lat: 37.865101, lng: -119.538330 }}
                         onClick={(e)=>handleClick(e)}
                         onLoad={()=>setLoaded(true)}>
+                        <StandaloneSearchBox 
+                            ref={searchRef}
+                            onPlacesChanged={handleSearch}>
+                            <input
+                                type="text"
+                                placeholder="Find me housing near ..."
+                                style={{
+                                    boxSizing: `border-box`,
+                                    border: `1px solid transparent`,
+                                    width: `240px`,
+                                    height: `32px`,
+                                    padding: `0 12px`,
+                                    borderRadius: `3px`,
+                                    boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                                    fontSize: `14px`,
+                                    outline: `none`,
+                                    textOverflow: `ellipses`,
+                                    position: "absolute",
+                                    left: "50%",
+                                    marginLeft: "-120px"
+                                }}
+                            />
+                        </StandaloneSearchBox>
                         {(loaded && pointsReady) && <HeatmapLayerF
                             data={pricing}
                         ></HeatmapLayerF>}

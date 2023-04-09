@@ -61,13 +61,13 @@ export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
     //     fetchData();
     // }, []);
 
-    useEffect(() => {
-        fetchCoord(usrCoord);
-    }, [usrCoord]);
+    // useEffect(() => {
+    //     fetchCoord(usrCoord);
+    // }, [usrCoord]);
 
     return (
         <div>
-            <Table dataSource={data} columns={columns} />
+            <Table dataSource={data.map((row, index) => ({ ...row, key: index }))} columns={columns} />
         </div>
     );
 };
