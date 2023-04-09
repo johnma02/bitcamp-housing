@@ -123,7 +123,7 @@ export default function Map(): JSX.Element{
                             visible={usrCoord ? true: false}
                             center={usrCoord ? usrCoord : undefined}
                             radius={radius}
-                            options={{strokeColor:'blue'}}
+                            options={{strokeColor:'sienna'}}
                         ></CircleF>
                     </GoogleMap>
                 </LoadScript>
@@ -131,7 +131,7 @@ export default function Map(): JSX.Element{
 
             <div className={styles.card}>
                 <h2 className={inter.className}>Housing Price Data</h2>
-                <Table usrCoord={usrCoord} radius={radius}></Table>
+                <Table usrCoord={usrCoord} radius={radius/1000*0.621371}></Table>
                 <Form.Label style={{width: "fill"}}><h4>Search Radius</h4></Form.Label>
                 <Form.Range
                     onChange={(e)=>setRadius(Number(e.target.value)*1603)}
