@@ -69,7 +69,11 @@ export default function MapTable({usrCoord, radius}:MapTableProps): JSX.Element 
 
     return (
         <div>
-            <Table dataSource={data.map((row, index) => ({ ...row, key: index }))} columns={columns} />
+            <Table 
+                dataSource={data.map((row, index) => ({ ...row, key: index }))} 
+                columns={columns}
+                style={{width: "400px", height: "665px"}}
+            />
         </div>
     );
 };

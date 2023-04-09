@@ -1,4 +1,4 @@
-import {GoogleMap, LoadScript, HeatmapLayerF, StandaloneSearchBox} from '@react-google-maps/api';
+import {GoogleMap, LoadScript, HeatmapLayerF, StandaloneSearchBox, CircleF} from '@react-google-maps/api';
 import {useState, useEffect, useRef} from 'react';
 import Form from 'react-bootstrap/Form';
 import styles from '../styles/Home.module.css';
@@ -30,7 +30,7 @@ export default function Map(): JSX.Element{
     const [pricing, setPricing] = useState<google.maps.visualization.WeightedLocation[]>([]);
     const [pointsReady, setPointsReady] = useState<boolean>(false);
     const [usrCoord, setUsrCoord] = useState<google.maps.LatLng | null>(null);
-    const [radius, setRadius] = useState<number>(10);
+    const [radius, setRadius] = useState<number>(80000);
     const fetchData = async () =>{
         const response = await fetch('/api/heatmap');
         const result = await response.json();
@@ -98,7 +98,7 @@ export default function Map(): JSX.Element{
                             onPlacesChanged={handleSearch}>
                             <input
                                 type="text"
-                                placeholder={`Find me houses within ${radius} miles of ...`}
+                                placeholder={`Find me houses within ${Math.round(radius/1000*0.621371)} miles of ...`}
                                 style={{
                                     boxSizing: `border-box`,
                                     border: `1px solid transparent`,
@@ -119,6 +119,12 @@ export default function Map(): JSX.Element{
                         {(loaded && pointsReady) && <HeatmapLayerF
                             data={pricing}
                         ></HeatmapLayerF>}
+                        <CircleF
+                            visible={usrCoord ? true: false}
+                            center={usrCoord ? usrCoord : undefined}
+                            radius={radius}
+                            options={{strokeColor:'blue'}}
+                        ></CircleF>
                     </GoogleMap>
                 </LoadScript>
             </div>
@@ -126,8 +132,10 @@ export default function Map(): JSX.Element{
             <div className={styles.card}>
                 <h2 className={inter.className}>Housing Price Data</h2>
                 <Table usrCoord={usrCoord} radius={radius}></Table>
-                <Form.Label>Set my search radius to ...</Form.Label>
-                <Form.Range></Form.Range>
+                <Form.Label style={{width: "fill"}}><h4>Search Radius</h4></Form.Label>
+                <Form.Range
+                    onChange={(e)=>setRadius(Number(e.target.value)*1603)}
+                ></Form.Range>
             </div>
         </div>
         
