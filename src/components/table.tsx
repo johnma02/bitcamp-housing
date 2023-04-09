@@ -15,11 +15,28 @@ interface RowData {
 //   ocean_proximity: string;
 }
 
+interface MapTableProps{
+    usrCoord: google.maps.LatLng | null
+}
 
-export default function MapTable(): JSX.Element {
+
+export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
     const [data, setData] = useState<RowData[]>([]);
     const fetchData = async () =>{
         const response = await fetch('/api/data');
+        const result = await response.json();
+        setData(result);
+    };
+    const fetchCoord = async (usrCoord:google.maps.LatLng | null) =>{
+        const response = await fetch('/api/coord', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                data: usrCoord
+            }),
+        });
         const result = await response.json();
         setData(result);
     };
@@ -45,6 +62,10 @@ export default function MapTable(): JSX.Element {
     useEffect(() => {
         fetchData();
     }, []);
+
+    useEffect(() => {
+        fetchCoord(usrCoord);
+    }, [usrCoord]);
 
     return (
         <div>

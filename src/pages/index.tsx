@@ -2,7 +2,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Map from '@/components/map';
 import { Inter } from 'next/font/google';
-import Table from '@/components/table';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,16 +21,7 @@ export default function Home() {
             </header>
 
             <main className={styles.main}>
-                <div className={styles.grid}>
-                    <div className={styles.card}>
-                        <Map></Map>
-                    </div>
-
-                    <div className={styles.card}>
-                        <h2 className={inter.className}>Housing Data</h2>
-                        <Table></Table>
-                    </div>
-                </div>
+                <Map></Map>
             </main>
 
             <footer className={styles.footer}>

@@ -16,7 +16,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const client = await pool.connect();
         const result = await client.query('SELECT longitude,latitude,round(avg(median_house_value)) as avg_house_value \
                                            FROM ca_housing \
-                                           GROUP BY longitude, latitude');
+                                           GROUP BY longitude, latitude\
+                                           ');
         await client.release();
         res.status(200).json(result.rows);
     } catch (err) {
