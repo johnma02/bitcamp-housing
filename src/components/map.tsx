@@ -96,7 +96,7 @@ export default function Map(): JSX.Element{
                             onPlacesChanged={handleSearch}>
                             <input
                                 type="text"
-                                placeholder="Find me housing near ..."
+                                placeholder="Find me housing prices near ..."
                                 style={{
                                     boxSizing: `border-box`,
                                     border: `1px solid transparent`,
@@ -122,7 +122,7 @@ export default function Map(): JSX.Element{
             </div>
 
             <div className={styles.card}>
-                <h2 className={inter.className}>Housing Data</h2>
+                <h2 className={inter.className}>Housing Price Data</h2>
                 <Table usrCoord={usrCoord} ></Table>
             </div>
         </div>

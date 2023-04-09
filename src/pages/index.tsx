@@ -10,13 +10,13 @@ export default function Home() {
     return (
         <div className={styles.container}>
             <Head>
-                <title>Bitcamp: Housing Map</title>
+                <title>Bitcamp: Housing Prices Map</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <header className={styles.header}>
                 <div className={styles.banner}>
-                    <h1 className={inter.className}>Bitcamp 2023: Housing Map</h1>
+                    <h1 className={inter.className}>Bitcamp 2023: Housing Prices Map</h1>
                 </div>
             </header>
 
