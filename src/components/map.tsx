@@ -36,7 +36,7 @@ export default function Map(this: any): JSX.Element{
 
     
     function handleClick(event: google.maps.MapMouseEvent) {
-        var lat = event.latLng?.lat(), lng = event.latLng?.lng();
+        setUsrCoord(event.latLng);
     }
     
     useEffect(()=>{
