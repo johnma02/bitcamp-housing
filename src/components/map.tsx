@@ -54,11 +54,11 @@ export default function Map(): JSX.Element{
             console.log(location.lat());
             console.log(location.lng());
             setUsrCoord(location);
-            if (map) {
-                map.panTo(location);
-            } else {
-                console.error("Map object not found");
-            }
+            // if (map) {
+            //     map.panTo(location);
+            // } else {
+            //     console.error("Map object not found");
+            // }
         } else{
             console.log("queried location does not indicate lat/long");
         }
