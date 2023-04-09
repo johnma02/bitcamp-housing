@@ -14,7 +14,10 @@ const pool = new Pool(config);
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM ca_housing LIMIT 10;');
+        const result = await client.query('SELECT longitude,latitude,round(avg(median_house_value)) as avg_house_value \
+                                           FROM ca_housing \
+                                           GROUP BY longitude, latitude\
+                                           ');
         await client.release();
         res.status(200).json(result.rows);
     } catch (err) {
@@ -22,3 +25,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(500).send('Internal server error');
     }
 }
+

@@ -15,21 +15,33 @@ interface RowData {
 //   ocean_proximity: string;
 }
 
+interface MapTableProps{
+    usrCoord: google.maps.LatLng | null
+}
 
-export default function MapTable(): JSX.Element {
+
+export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
     const [data, setData] = useState<RowData[]>([]);
     const fetchData = async () =>{
         const response = await fetch('/api/data');
         const result = await response.json();
         setData(result);
     };
+    const fetchCoord = async (usrCoord:google.maps.LatLng | null) =>{
+        const response = await fetch('/api/coord', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                data: usrCoord
+            }),
+        });
+        const result = await response.json();
+        setData(result);
+    };
     
     const columns = [
-        {
-            title: 'housing_id',
-            dataIndex: 'housing_id',
-            key: 'housing_id',
-        },
         {
             title: 'Longitude',
             dataIndex: 'longitude',
@@ -41,9 +53,9 @@ export default function MapTable(): JSX.Element {
             key: 'latitude',
         },
         {
-            title: 'Median House Value',
-            dataIndex: 'median_house_value',
-            key: 'median_house_value',
+            title: 'Average House Value',
+            dataIndex: 'avg_house_value',
+            key: 'avg_house_value',
         }
     ];
 
@@ -51,9 +63,14 @@ export default function MapTable(): JSX.Element {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        fetchCoord(usrCoord);
+    }, [usrCoord]);
+
     return (
         <div>
             <Table dataSource={data} columns={columns} />
         </div>
     );
 };
+
