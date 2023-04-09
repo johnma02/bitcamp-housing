@@ -132,7 +132,7 @@ export default function Map(): JSX.Element{
             <div className={styles.card}>
                 <h2 className={inter.className}>Housing Price Data</h2>
                 <Table usrCoord={usrCoord} radius={radius/1000*0.621371}></Table>
-                <Form.Label style={{width: "fill"}}><h4>Search Radius</h4></Form.Label>
+                <Form.Label style={{width: "fill"}}><h4>Search Radius: {Math.round(radius/1000*0.621371)}</h4></Form.Label>
                 <Form.Range
                     onChange={(e)=>setRadius(Number(e.target.value)*1603)}
                 ></Form.Range>
