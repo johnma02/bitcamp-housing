@@ -12,18 +12,16 @@ const config = {
 const pool = new Pool(config);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'POST') {
-        try {
-            const { data } = req.body; // Extract the data from the request body
-            const client = await pool.connect();
-            const result = await client.query('INSERT INTO data (value) VALUES ($1) RETURNING id, value', [data]); // Insert the new data into the database and return its id and value
-            await client.release();
-            res.status(201).json(result.rows[0]); // Return the newly created data
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Internal server error');
-        }
-    } else {
-        res.status(405).send('Method not allowed');
+    try {
+        const {query, method} = req;
+        const lng = Number(query.lng);
+        const lat = Number(query.lat);
+        const client = await pool.connect();
+        const result = await client.query('SELECT longitude,latitude, SQRT(POWER(longitude-$1)+POWER(longitude-$2)) as distance FROM ca_housing WHERE distance <=1000', [lng, lat]);
+        await client.release();
+        res.status(200).json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
     }
 }

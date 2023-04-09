@@ -28,14 +28,12 @@ export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
         setData(result);
     };
     const fetchCoord = async (usrCoord:google.maps.LatLng | null) =>{
-        const response = await fetch('/api/coord', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+        const response = await fetch("/api/coord",{
+            "method":"GET",
+            "headers":{
+                "lng":"${usrCoord.lng()}",
+                "lat":"${usrCoord.lat()}"
             },
-            body: JSON.stringify({
-                data: usrCoord
-            }),
         });
         const result = await response.json();
         setData(result);
@@ -59,9 +57,9 @@ export default function MapTable({usrCoord}:MapTableProps): JSX.Element {
         }
     ];
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     fetchData();
+    // }, []);
 
     // useEffect(() => {
     //     fetchCoord(usrCoord);
